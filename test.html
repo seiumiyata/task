@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タスク管理アプリ</title>
+</head>
+<body>
+    <h1>タスク管理アプリ</h1>
+    <button id="add-task-btn">タスクを追加</button>
+    <button id="complete-task-btn">タスクを完了</button>
+    <button id="delete-task-btn">タスクを削除</button>
+    <button id="clear-all-tasks-btn">全てのタスクを削除</button>
+    <ul id="task-list"></ul>
+    <script src="test.js"></script>
+    <script>
+        // タスク管理アプリのデータをローカルストレージから読み込む
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        // タスクの一括削除をする関数
+        function clearAllTasks() {
+            if (confirm("本当に全てのタスクを削除しますか？")) {
+                tasks = [];
+                displayTasks();
+                saveTasks();
+            }
+        }
+
+        // タスクをローカルストレージに保存する関数
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        // メイン関数
+        function main() {
+            document.getElementById("add-task-btn").addEventListener("click", addTask);
+            document.getElementById("complete-task-btn").addEventListener("click", completeTask);
+            document.getElementById("delete-task-btn").addEventListener("click", deleteTask);
+            document.getElementById("clear-all-tasks-btn").addEventListener("click", clearAllTasks);
+            displayTasks(); // ページロード時にタスクを表示
+        }
+
+        // アプリの実行
+        main();
+    </script>
+</body>
+</html>
